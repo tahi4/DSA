@@ -42,7 +42,7 @@ once we do this: None <- 5  3 -> 4 -> None
 change the previous value to 5, and current to 3 and change what its facing None <- 5 <- 3  4 -> None
 repeat the process, until the current value is null
 then the previous value at the end of the loop should be our NEW HEAD
-
+m
 
 
 '''
