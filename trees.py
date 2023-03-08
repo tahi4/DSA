@@ -44,7 +44,7 @@ Output: []
 
 during the inverse: the left and right subtrees of each node are swapped
 The function invertTree() then recursively swaps the left and right subtrees of each node starting from the root
-because it calls itself in the function
+because it calls itself in the function.
 
 
 '''
