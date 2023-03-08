@@ -26,7 +26,7 @@ Output: []
 
 # SOLUTION
 
-1. recursive  DFS -Depth First Search recursive algorithm to search all the vertices of a tree data structure
+1. recursive dfs -Depth First Search recursive algorithm to search all the vertices of a tree data structure
 
         4                                          
       /   \
@@ -94,10 +94,47 @@ Input: root = [1,null,2]
 Output: 2
 
 # SOLUTION
+
 1. recusrive dfs:
 
-
+function stops the recursion and returns 0 when it encounters a None node in the binary tree.
+else it adds 1, for root node, and then the max value for whichever branch has longest chain
  
+        4                                          
+      /   \
+     7     2
+    / \  
+   9   6 
+
+maxDepth(root=4) = 1 + max(self.maxDepth(root=7), self.maxDepth(root=2))
+
+--> maxDepth(root=7) = 1 + max(self.maxDepth(root=9), self.maxDepth(root=6))
+----> maxDepth(root=9) = 1 + max(0,0) = 1
+----> maxDepth(root=2) = 1 + max(0,0) = 1
+--> maxDepth(root=7) = 1 + max(1, 1) = 2
+
+maxDepth(root=4) = 1 + max(2, self.maxDepth(root=2))
+--> maxDepth(root=2) = 1 + max(0,0) = 1
+
+maxDepth(root=4) = 1 + max(2, 1)
+maxDepth(root=4) = 1 + 2 = 3 depth layers (ans)
+
+2. Iterative BFS: The breadth-first search used to search a tree or graph data structure for a node that meets a set of criteria
+
+
 
 '''
 
+
+# solution 1:
+
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root: 
+            return 0
+        
+        return 1 + max(self.maxDepth(root.right), self.maxDepth(root.left)) # if root node is present
