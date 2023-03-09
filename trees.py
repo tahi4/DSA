@@ -259,6 +259,8 @@ recursive dfs:
   /      \  
 8         5 
 
+FINDING BOTTOM MOST NODE
+
 height of root node=4 => 1 + max(node 7, 0)
 -> height of root node=7 => 1 + max(node 9,node 6)
 --> height of root node=9 => 1 + max(node 8, 0) ---> height of root node=8 => 1 + max(0, 0)
@@ -305,4 +307,114 @@ class Solution(object):
 
 
 
-            
+'''
+Trees
+EASY
+
+4. Balanced Binary Tree:
+
+Given a binary tree, determine if it is height-balanced
+A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one
+
+# QUESTION
+
+Example 1:
+
+Input: root = [3,9,20,null,null,15,7]
+Output: true
+
+Example 2:
+
+Input: root = [1,2,2,3,3,null,null,4,4]
+Output: false
+
+Example 3:
+
+Input: root = []
+Output: true
+
+
+# SOLUTION
+
+recursive dfs:
+
+calculating from bottom up to make the T O(N) =>
+need the:
+height: in terms of integer so we can calculate the difference 
+difference of subtrees: output in form of boolean TRUE if diff between height is 0, 1, else FALSE  
+    
+'''     
+
+class Solution(object):
+    def isBalanced(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        
+        def dfs(root):
+            if not root:
+                return [True, 0] 
+            right = dfs(root.right) 
+            left = dfs(root.left)
+            balanced = (left[0] and right[0] and abs(right[1] - left[1]) <= 1)
+
+            return [balanced, 1 + max(left[1], right[1])]  #root[0,1] = balance: bool, height: int
+
+        return dfs(root)[0] #root[0] = bool
+
+
+
+'''
+Trees
+EASY
+
+5. Same Tree
+
+
+# QUESTION
+
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+Example 1:
+
+Input: p = [1,2,3], q = [1,2,3]
+Output: true
+
+Example 2:
+
+Input: p = [1,2], q = [1,null,2]
+Output: false
+
+Example 3:
+
+Input: p = [1,2,1], q = [1,1,2]
+Output: false
+
+# SOLUTION
+
+recursive dfs:
+if theyre both empty trees: identical: True
+if the tree is not empty AND the values are same: return True
+Else False
+
+
+'''
+
+
+class Solution(object):
+    def isSameTree(self, p, q):
+        """
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: bool
+        """
+        if not p and not q:
+            return True
+        if p and q and p.val == q.val:
+            return self.isSameTree(p.right, q.right) and self.isSameTree(p.left, q.left) #both structure and val OF ALL has to be same to return true
+        else:
+            return False
+
+
