@@ -242,10 +242,65 @@ Output: 1
 
 # SOLUTION
 
+height(node in binary tree) = 1 + max(height(node.left), height(node.right))#HEIGHT IS EQUIVALENT TO THE MAX HEIGHT OF EITHER SIDE  #add 1 to that value to get the height of the current node
+Diameter of a binary tree:  max height left subtree + max height of right subtree
 
+height of a leaf node is defined to be 1,  leaf node is a node that is at the end of a branch and has no further nodes connected to it.
+
+recursive dfs:
+
+
+
+        4                                          
+      /   
+     7     
+    / \  
+   9   6 
+  /      \  
+8         5 
+
+height of root node=4 => 1 + max(node 7, 0)
+-> height of root node=7 => 1 + max(node 9,node 6)
+--> height of root node=9 => 1 + max(node 8, 0) ---> height of root node=8 => 1 + max(0, 0)
+--> height of root node=6 => 1 + max(node 5, 0) ---> height of root node=5 => 1 + max(0, 0)
+
+BOTTOM UP CALCULATION
+
+---> height of root node=8 => 1 + max(0, 0) #OUTPUT = 1 #DIAMETER = 0
+---> height of root node=5 => 1 + max(0, 0) #OUTPUT = 1 #DIAMETER = 0
+
+--> height of root node=6 => 1 + max(1, 0) #OUTPUT = 2 #DIAMETER = 1 + 0 = 1
+--> height of root node=9 => 1 + max(1, 0) #OUTPUT = 2 #DIAMETER = 1 + 0 = 1
+
+-> height of root node=7 => 1 + max(2,2) #OUTPUT = 3 #DIAMETER = 2 + 2 = 4
+
+height of root node=4 => 1 + max(3, 0) #OUTPUT 4 ##DIAMETER = 3 + 0 = 3
+
+MAX DIAMETER = 4
 
 '''
 
+    
+class Solution(object):
+    def diameterOfBinaryTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        self.diameter = 0
+        def dfs(root):
+
+            if not root:
+                return 0
+
+            height_right = dfs(root.right) #  passing in the left child of the current node, which becomes the new root for the recursive call
+            height_left = dfs(root.left) #  passing in the right child of the current node, which becomes the new root for the recursive call
+            self.diameter = max(self.diameter, height_right + height_left)
+
+            return 1 + max(height_left, height_right)
+
+        dfs(root)
+        return self.diameter
     
 
 
