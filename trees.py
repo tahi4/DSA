@@ -418,3 +418,62 @@ class Solution(object):
             return False
 
 
+'''
+Trees
+EASY 
+
+6. Subtree of Another Tree:
+
+# QUESTION
+
+Given the roots of two binary trees root and subRoot, 
+return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise.
+A subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. 
+The tree tree could also be considered as a subtree of itself.
+
+ 
+
+Example 1:
+
+Input: root = [3,4,5,1,2], subRoot = [4,1,2]
+Output: true
+
+Example 2:
+
+Input: root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]
+Output: false
+
+# SOLUTION
+
+recursive dfs:
+if subtree is null, it would be considered a subtree of our root tree
+if our root tree is null AND subtree is null, it would be considered a subtree of our root tree
+if the head node val of root is equivalent to head node val of subtree, check if all other nodes are equal too, if they are return true, else false
+
+finally, if all returns false, check if the subtree is perhaps equal to one of our root tree children, left or right
+ 
+'''
+
+class Solution(object):
+    def isSubtree(self, root, subRoot):
+        """
+        :type root: TreeNode
+        :type subRoot: TreeNode
+        :rtype: bool
+        """
+        if not subRoot:
+            return True
+        if not root:
+            return False
+
+        if self.isSameTree(root, subRoot):
+            return True
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot) #if root and subroot arent directly equal, it might be equal to a children root in the tree
+       
+
+    def isSameTree(self, root, subRoot):
+            if not root and not subRoot:
+                return True
+            if root and subRoot and root.val == subRoot.val: #node have same val
+                return (self.isSameTree(root.left, subRoot.left) and self.isSameTree(root.right, subRoot.right))
+            return False
